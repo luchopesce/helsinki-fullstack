@@ -1,2 +1,2 @@
 # helsinki-fullstack
-Repository for couse full stack helsinki open
+Repository for course full stack helsinki open
