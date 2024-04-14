@@ -17,22 +17,27 @@ const Statistics = ({ stats }) => {
   } else {
     return (
       <>
-        <Stats text="good" value={stats.good} />
-        <Stats text="neutral" value={stats.neutral} />
-        <Stats text="bad" value={stats.bad} />
-        <Stats text="total" value={total ? total : 0} />
-        <Stats text="average" value={average} />
-        <Stats text="positive" value={positive} symbol="%" />
+        <table>
+          <tbody>
+            <StatisticLine text="good" value={stats.good} />
+            <StatisticLine text="neutral" value={stats.neutral} />
+            <StatisticLine text="bad" value={stats.bad} />
+            <StatisticLine text="total" value={total ? total : 0} />
+            <StatisticLine text="average" value={average} />
+            <StatisticLine text="positive" value={positive} symbol="%" />
+          </tbody>
+        </table>
       </>
     );
   }
 };
 
-const Stats = ({ text, value, symbol }) => (
-  <div>
-    {" "}
-    {text} {value} {symbol ? symbol : null}
-  </div>
+const StatisticLine = ({ text, value, symbol }) => (
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+    {symbol ? <td>{symbol}</td> : null}
+  </tr>
 );
 
 const Button = ({ handleClick, text }) => (
