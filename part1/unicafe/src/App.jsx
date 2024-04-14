@@ -11,7 +11,7 @@ const Header = (props) => {
 const Display = (props) => (
   <div>
     {" "}
-    {props.text} {props.state}
+    {props.text} {props.state} {props.symbol ? props.symbol : null}
   </div>
 );
 
@@ -24,6 +24,10 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+
+  const total = good + neutral + bad;
+  const average = total ? (good - bad) / total : 0;
+  const positive = total ? (good * 100) / total : 0;
 
   //handlers
   const handleClickGood = () => setGood(good + 1);
@@ -40,6 +44,9 @@ const App = () => {
       <Display state={good} text="good" />
       <Display state={neutral} text="neutral" />
       <Display state={bad} text="bad" />
+      <Display state={total} text="total" />
+      <Display state={average} text="average" />
+      <Display state={positive} text="positive" symbol="%" />
     </div>
   );
 };
