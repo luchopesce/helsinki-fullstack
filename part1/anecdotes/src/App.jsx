@@ -5,8 +5,6 @@ const Button = ({ handleClick, text }) => (
 );
 
 const App = () => {
-  const [selected, setSelected] = useState(0);
-  
   const anecdotes = [
     "If it hurts, do it more often.",
     "Adding manpower to a late software project makes it later!",
@@ -18,6 +16,13 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
+  const [selected, setSelected] = useState({
+    anecdote: 0,
+    vote: new Array(anecdotes.length).fill(0),
+  });
+
+  console.log(selected);
+
   const randomNumber = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -25,14 +30,29 @@ const App = () => {
   };
 
   const handleClickRandom = () => {
-    const value = randomNumber(0, anecdotes.length)
-    setSelected(value)
+    const value = randomNumber(0, anecdotes.length);
+    const newValue = {
+      ...selected,
+      anecdote: value,
+    };
+    setSelected(newValue);
+    // console.log(value)
+  };
+
+  const handleClickVote = () => {
+    const newVote = { ...selected };
+
+    newVote.vote[selected.anecdote] += 1;
+
+    setSelected(newVote);
     // console.log(value)
   };
 
   return (
     <>
-      <div>{anecdotes[selected]}</div>
+      <div>{anecdotes[selected.anecdote]}</div>
+      <div>has {selected.vote[selected.anecdote]} votes</div>
+      <Button handleClick={handleClickVote} text="vote" />
       <Button handleClick={handleClickRandom} text="next anecdote" />
     </>
   );
