@@ -1,22 +1,39 @@
 import { useState } from "react";
 
-const Header = (props) => {
+const Header = ({ title }) => {
   return (
     <>
-      <h1>{props.title}</h1>
+      <h1>{title}</h1>
     </>
   );
 };
 
-const Display = (props) => (
+const Statistics = ({ stats }) => {
+  const total = stats.good + stats.neutral + stats.bad;
+  const average = total ? (stats.good - stats.bad) / total : 0;
+  const positive = total ? (stats.good * 100) / total : 0;
+
+  return (
+    <>
+      <Stats text="good" value={stats.good} />
+      <Stats text="neutral" value={stats.neutral} />
+      <Stats text="bad" value={stats.bad} />
+      <Stats text="total" value={total ? total : 0} />
+      <Stats text="average" value={average} />
+      <Stats text="positive" value={positive} symbol="%"/>
+    </>
+  );
+};
+
+const Stats = ({ text, value, symbol }) => (
   <div>
     {" "}
-    {props.text} {props.state} {props.symbol ? props.symbol : null}
+    {text} {value} {symbol ? symbol : null}
   </div>
 );
 
-const Button = (props) => (
-  <button onClick={props.handleClick}>{props.text}</button>
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>{text}</button>
 );
 
 const App = () => {
@@ -25,9 +42,11 @@ const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const total = good + neutral + bad;
-  const average = total ? (good - bad) / total : 0;
-  const positive = total ? (good * 100) / total : 0;
+  const stats = {
+    good: good,
+    neutral: neutral,
+    bad: bad,
+  };
 
   //handlers
   const handleClickGood = () => setGood(good + 1);
@@ -41,12 +60,7 @@ const App = () => {
       <Button handleClick={handleClickNeutral} text="neutral" />
       <Button handleClick={handleClickBad} text="bad" />
       <Header title="statistics" />
-      <Display state={good} text="good" />
-      <Display state={neutral} text="neutral" />
-      <Display state={bad} text="bad" />
-      <Display state={total} text="total" />
-      <Display state={average} text="average" />
-      <Display state={positive} text="positive" symbol="%" />
+      <Statistics stats={stats} />
     </div>
   );
 };
