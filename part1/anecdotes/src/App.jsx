@@ -4,6 +4,14 @@ const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
 
+const Header = ({ title }) => {
+  return (
+    <>
+      <h1>{title}</h1>
+    </>
+  );
+};
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -36,24 +44,26 @@ const App = () => {
       anecdote: value,
     };
     setSelected(newValue);
-    // console.log(value)
   };
 
   const handleClickVote = () => {
     const newVote = { ...selected };
-
     newVote.vote[selected.anecdote] += 1;
-
     setSelected(newVote);
-    // console.log(value)
   };
+
+  const maxVoted = selected.vote.indexOf(Math.max(...selected.vote));
 
   return (
     <>
+      <Header title="Anecdote of day" />
       <div>{anecdotes[selected.anecdote]}</div>
       <div>has {selected.vote[selected.anecdote]} votes</div>
       <Button handleClick={handleClickVote} text="vote" />
       <Button handleClick={handleClickRandom} text="next anecdote" />
+      <Header title="Anecdote with most vote" />
+      <div>{anecdotes[maxVoted]}</div>
+      <div>has {selected.vote[maxVoted]} votes</div>
     </>
   );
 };
