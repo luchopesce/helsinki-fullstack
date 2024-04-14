@@ -12,17 +12,20 @@ const Statistics = ({ stats }) => {
   const total = stats.good + stats.neutral + stats.bad;
   const average = total ? (stats.good - stats.bad) / total : 0;
   const positive = total ? (stats.good * 100) / total : 0;
-
-  return (
-    <>
-      <Stats text="good" value={stats.good} />
-      <Stats text="neutral" value={stats.neutral} />
-      <Stats text="bad" value={stats.bad} />
-      <Stats text="total" value={total ? total : 0} />
-      <Stats text="average" value={average} />
-      <Stats text="positive" value={positive} symbol="%"/>
-    </>
-  );
+  if (total < 1) {
+    return <div>No feedback given</div>;
+  } else {
+    return (
+      <>
+        <Stats text="good" value={stats.good} />
+        <Stats text="neutral" value={stats.neutral} />
+        <Stats text="bad" value={stats.bad} />
+        <Stats text="total" value={total ? total : 0} />
+        <Stats text="average" value={average} />
+        <Stats text="positive" value={positive} symbol="%" />
+      </>
+    );
+  }
 };
 
 const Stats = ({ text, value, symbol }) => (
