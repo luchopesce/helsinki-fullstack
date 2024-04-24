@@ -39,15 +39,13 @@ const Part = ({ part, exercises }) => {
 };
 
 const Total = ({ course }) => {
-  let acc = 0;
-
-  course.parts.forEach((part) => {
-    acc = acc + part.exercises;
-  });
-
+  const total = course.parts.reduce((s, p) => {
+    const someMagicHere = s + p.exercises
+    return someMagicHere;
+  }, 0);
   return (
     <>
-      <p>Number of exercises {acc} </p>
+      <p>Number of exercises {total} </p>
     </>
   );
 };
